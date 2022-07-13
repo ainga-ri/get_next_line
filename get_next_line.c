@@ -20,14 +20,21 @@ char	*get_next_line(int fd)
 {
 	static char	*guardado;
 	size_t		i;
+	int		a;
 
-	guardado = calloc(10, sizeof(char));
-
+	guardado = (char *)calloc(8, sizeof(char));
 	i = read(fd, guardado, BUFFER_SIZE);
+	while ((guardado[a] != '\n' || guardado[a] != '\0') && a <= i)
+	{
+		printf("%s\n", guardado);
+		a++;
+	}
+	i = read(fd, guardado, BUFFER_SIZE);	
+	printf("%s\n", guardado);
 	if (i == -1)
 	{
 		return (NULL);
 	}
-	printf("%zu\n", i);
+	printf("Mida del retorn del read: %zu\n", i);
 	return (guardado);
 }
