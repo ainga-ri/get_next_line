@@ -15,26 +15,38 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <stdlib.h>
+#include <string.h>
 
 char	*get_next_line(int fd)
 {
+	
 	static char	*guardado;
 	size_t		i;
-	int		a;
-
-	guardado = (char *)calloc(8, sizeof(char));
+	int		x;
+	char	*line;
+	
+	guardado = (char *)calloc(BUFFER_SIZE, sizeof(char));
+	x = 1;
 	i = read(fd, guardado, BUFFER_SIZE);
-	while ((guardado[a] != '\n' || guardado[a] != '\0') && a <= i)
-	{
-		printf("%s\n", guardado);
-		a++;
+	line = "";
+	while (!strchr(guardado, '\n'))
+	{	
+		//ft_strjoin(line, guardado);
+		//i = read(fd, guardado, BUFFER_SIZE)
+		//printf("%s\n", guardado);
+		//a++;
+		x++;
+		free(guardado);
+		i = read(fd, guardado, BUFFER_SIZE * x);
+		printf("Valor guardado despues free: %s\n", guardado);
 	}
-	i = read(fd, guardado, BUFFER_SIZE);	
-	printf("%s\n", guardado);
+	//i = read(fd, guardado, BUFFER_SIZE);	
+	//printf("%s\n", guardado);
 	if (i == -1)
 	{
 		return (NULL);
 	}
 	printf("Mida del retorn del read: %zu\n", i);
+
 	return (guardado);
 }
