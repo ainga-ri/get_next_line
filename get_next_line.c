@@ -18,7 +18,7 @@ char	*ft_get_line(char *str)
 	int 	i;
 
 	i = 0;
-	while (fstr[i] == '\n')
+	while (str[i] != '\n') // || str[i] != '\0')
 	{
 		i++;
 	}
@@ -28,20 +28,34 @@ char	*ft_get_line(char *str)
 	return (line);
 }
 
-char	*get_next_line(int fd)
+char	*ft_clean(char *str)
 {
-	
+	char *rest;
+	int 	i;
+
+	i = 0;
+	while (str[i] != '\n') // || str[i] != '\0')
+	{
+		i++;
+	}
+	rest = ft_substr(str, i + 1, ft_strlen(str));
+	if (!rest)
+		return (NULL);
+	return (rest);
+}
+
+char	*get_next_line(int fd)
+{	
 	char	*guardado;
-	static char	*new_guardado;
+	static char	*new_guardado = "";
 	int		i;
 	char	*line;
 	
-	line = "";
 	i = 1;
-	guardado = (char *)calloc((BUFFER_SIZE + 1) *  sizeof(char));
+	guardado = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!guardado)
 		return (NULL);
-	while (!ft_strchr(guardado, '\n') && i > 0)
+	while ((!ft_strchr(guardado, '\n') || !ft_strchr(guardado, '\0')) && i > 0)
 	{
 		i = read(fd, guardado, BUFFER_SIZE);
 		if (i == -1)
@@ -58,6 +72,7 @@ char	*get_next_line(int fd)
 	line = ft_get_line(new_guardado);
 	//borramos line en new_guardado
 	new_guardado = ft_clean(new_guardado);
-	printf("Mida del retorn del read: %d\n", i);
+//	printf("Resto de la line, value of new_guardado %s\n", new_guardado);
+	//printf("Mida del retorn del read: %d\n", i);
 	return (line);
 }
