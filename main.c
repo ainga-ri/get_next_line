@@ -7,8 +7,15 @@ int main (void)
 
 	fd = open("test", O_RDONLY);
 	tmp = get_next_line(fd);
-	printf("%s\n", tmp);
-	free(tmp);
+	if (!tmp)
+		return (0);
+	while (tmp)
+	{
+		printf("%s\n", tmp);
+		free(tmp);
+		tmp = get_next_line(fd);
+	}
+	/*
 	tmp = get_next_line(fd);
 	printf("%s\n", tmp);
 	free(tmp);
@@ -18,6 +25,7 @@ int main (void)
 	tmp = get_next_line(fd);
 	printf("%s\n", tmp);
 	free(tmp);
+	*/
 	//printf("%s\n", get_next_line(fd));
 //	printf("%s\n", get_next_line(fd));
 //	printf("%s\n", get_next_line(fd));

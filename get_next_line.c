@@ -6,7 +6,7 @@
 /*   By: msindreu <msindreu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:14:58 by msindreu          #+#    #+#             */
-/*   Updated: 2022/07/14 18:11:33 by msindreu         ###   ########.fr       */
+/*   Updated: 2022/07/19 17:45:54 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 	//compiamos linea en line
+	printf("-------- Valor de la line sin limpiar: %s ------\n", new_guardado);
 	line = ft_get_line(new_guardado);
 	//borramos line en new_guardado
 	new_guardado = ft_clean(new_guardado);
-//	printf("Resto de la line, value of new_guardado %s\n", new_guardado);
+	printf("Resto de la line, value of new_guardado %s\n", new_guardado);
 	//printf("Mida del retorn del read: %d\n", i);
 	return (line);
 }
