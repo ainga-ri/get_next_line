@@ -3,12 +3,21 @@
 int main (void)
 {
 	int	fd;
+	char *tmp;
 
 	fd = open("test", O_RDONLY);
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
-	printf("%s\n", get_next_line(fd));
+	tmp = get_next_line(fd);
+	printf("%s\n", tmp);
+	free(tmp);
+	tmp = get_next_line(fd);
+	printf("%s\n", tmp);
+	free(tmp);
+	tmp = get_next_line(fd);
+	printf("%s\n", tmp);
+	free(tmp);
+	tmp = get_next_line(fd);
+	printf("%s\n", tmp);
+	free(tmp);
 	//printf("%s\n", get_next_line(fd));
 //	printf("%s\n", get_next_line(fd));
 //	printf("%s\n", get_next_line(fd));
