@@ -5,8 +5,9 @@ int main (void)
 	int	fd;
 	char *tmp;
 
-	fd = open("test", O_RDONLY);
+	fd = open("ana.txt", O_RDONLY);
 	tmp = get_next_line(fd);
+	printf("Hola?? %s\n", tmp);
 	if (!tmp)
 		return (0);
 	while (tmp)

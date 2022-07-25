@@ -18,7 +18,7 @@ char	*ft_get_line(char *str)
 	int 	i;
 
 	i = 0;
-	while (str[i] != '\n') // || str[i] != '\0')
+	while (str[i] != '\n' && str[i] != '\0')
 	{
 		i++;
 	}
@@ -34,6 +34,8 @@ char	*ft_clean(char *str)
 	int 	i;
 
 	i = 0;
+	if (ft_strchr(str, '\0'))
+		return (NULL);
 	while (str[i] != '\n') // || str[i] != '\0')
 	{
 		i++;
@@ -55,22 +57,29 @@ char	*get_next_line(int fd)
 	guardado = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!guardado)
 		return (NULL);
-	while ((!ft_strchr(guardado, '\n') || !ft_strchr(guardado, '\0')) && i > 0)
+	while (!ft_strchr(guardado, '\n') && i > 0)
 	{
 		i = read(fd, guardado, BUFFER_SIZE);
-		if (i == -1)
+		printf("valor i: %d\n", i);
+		if (i == -1 || i == 0)
 		{
 			if (guardado)
 				free(guardado);
 			return (NULL);
 		}
+		printf("valor guardado: %s\n", guardado);
 		new_guardado = ft_strjoin(new_guardado, guardado);
+		printf("valor NEWguardado: %s\n", new_guardado);
 		if (!new_guardado)
 			return (NULL);
+		/* Cuando tenemos unicamente una linea que solo tendra \0, iterara infinitamente */
+		if (ft_strchr(guardado, '\0'))
+			i = 0;
 	}
 	//compiamos linea en line
 	printf("-------- Valor de la line sin limpiar: %s ------\n", new_guardado);
 	line = ft_get_line(new_guardado);
+	printf("Este es el valor de line: %s\n", line);
 	//borramos line en new_guardado
 	new_guardado = ft_clean(new_guardado);
 	printf("Resto de la line, value of new_guardado %s\n", new_guardado);
