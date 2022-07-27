@@ -64,10 +64,10 @@ char	*get_next_line(int fd)
 		/* Qué pasa cuando el B_S es muy grande? Ex: B_S = 3, a\n_, cual es el último valor?*/
 		/* Hacer test con B_S = 2, 3 y 4, con 2, pilla 'a', con 3 pilla 'n'
 		y con 4 pilla "ina"...*/
-		// QUÉ HACE EL READ
+		// QUÉ HACE EL READ..... LA CLAVE ESTA EN EOF?
 		i = read(fd, guardado, BUFFER_SIZE);
-		printf("Valor de guardado: %s\n", guardado);
-		printf("valor de i: %d\n", i);
+		//printf("Valor de guardado: %s\n", guardado);
+		//printf("valor de i: %d\n", i);
 		if (i == -1)
 		{
 			if (guardado)
@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 	}
 
 	line = ft_get_line(new_guardado);
-	printf("Valor new_guardado before clean %s\n", new_guardado);
+	//printf("Valor new_guardado before clean %s\n", new_guardado);
 	//printf("Valor line:%s\n", line);
 	if (ft_strlen(line) != 0)
 		new_guardado = ft_clean(new_guardado);
@@ -93,6 +93,6 @@ char	*get_next_line(int fd)
 		new_guardado = "";
 		return (NULL);
 	}
-	printf("Valor new_guardado %s\n", new_guardado);
+	//printf("Valor new_guardado %s\n", new_guardado);
 	return (line);
 }

@@ -5,13 +5,13 @@ int main (void)
 	int	fd;
 	char *tmp;
 
-	fd = open("test", O_RDONLY);
+	fd = open("alrina.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
 		return (0);
 	while (tmp)
 	{
-		printf("from main: %s\n", tmp);
+		printf("%s\n", tmp);
 		free(tmp);
 		//printf("hola???");
 		tmp = get_next_line(fd);
