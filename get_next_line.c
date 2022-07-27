@@ -9,7 +9,6 @@
 /*   Updated: 2022/07/19 17:45:54 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//hola rodolfo
 #include "get_next_line.h"
 
 char	*ft_get_line(char *str)
