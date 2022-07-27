@@ -35,7 +35,7 @@ char	*ft_clean(char *str)
 	i = 0;
 	//if (!ft_strchr(str, '\n'))
 	//	return (NULL);
-	while (str[i] != '\n')
+	while (str[i] != '\n' && str[i] != '\0')
 	{
 		i++;
 	}
@@ -61,7 +61,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (!ft_strchr(guardado, '\n') && i > 0)
 	{
+		/* Qué pasa cuando el B_S es muy grande? Ex: B_S = 3, a\n_, cual es el último valor?*/
+		/* Hacer test con B_S = 2, 3 y 4, con 2, pilla 'a', con 3 pilla 'n'
+		y con 4 pilla "ina"...*/
+		// QUÉ HACE EL READ
 		i = read(fd, guardado, BUFFER_SIZE);
+		printf("Valor de guardado: %s\n", guardado);
+		printf("valor de i: %d\n", i);
 		if (i == -1)
 		{
 			if (guardado)
@@ -71,19 +77,22 @@ char	*get_next_line(int fd)
 		else if (i > 0)
 		{		
 			new_guardado = ft_strjoin(new_guardado, guardado);
-			printf("Valor new_guardado:%s\n", new_guardado);
+			//printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
 				return (NULL);
 		}
-		else
-		{
-			printf("HOLA ALFREDITO EL TEXTO HA TERMINADO Y NO DA SEGMENTATION FAULT JE JE JE");
-			return (0);
-		}
 	}
+
 	line = ft_get_line(new_guardado);
+	printf("Valor new_guardado before clean %s\n", new_guardado);
 	//printf("Valor line:%s\n", line);
-	new_guardado = ft_clean(new_guardado);
-	//printf("Valor new_guardado %s\n", new_guardado);
+	if (ft_strlen(line) != 0)
+		new_guardado = ft_clean(new_guardado);
+	else
+	{
+		new_guardado = "";
+		return (NULL);
+	}
+	printf("Valor new_guardado %s\n", new_guardado);
 	return (line);
 }

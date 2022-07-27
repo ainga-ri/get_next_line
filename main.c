@@ -11,7 +11,7 @@ int main (void)
 		return (0);
 	while (tmp)
 	{
-		printf("%s\n", tmp);
+		printf("from main: %s\n", tmp);
 		free(tmp);
 		//printf("hola???");
 		tmp = get_next_line(fd);
