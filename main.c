@@ -5,16 +5,17 @@ int main (void)
 	int	fd;
 	char *tmp;
 
-	fd = open("ana.txt", O_RDONLY);
+	fd = open("test", O_RDONLY);
 	tmp = get_next_line(fd);
-	printf("Hola?? %s\n", tmp);
 	if (!tmp)
 		return (0);
 	while (tmp)
 	{
 		printf("%s\n", tmp);
 		free(tmp);
+		//printf("hola???");
 		tmp = get_next_line(fd);
+		//printf("hola");
 	}
 	/*
 	tmp = get_next_line(fd);

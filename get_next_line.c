@@ -33,15 +33,18 @@ char	*ft_clean(char *str)
 	int 	i;
 
 	i = 0;
-	if (ft_strchr(str, '\0'))
-		return (NULL);
-	while (str[i] != '\n') // || str[i] != '\0')
+	//if (!ft_strchr(str, '\n'))
+	//	return (NULL);
+	while (str[i] != '\n')
 	{
 		i++;
 	}
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	if (!rest)
+	{
+		printf("Rest existe??\n");
 		return (NULL);
+	}
 	return (rest);
 }
 
@@ -59,29 +62,28 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(guardado, '\n') && i > 0)
 	{
 		i = read(fd, guardado, BUFFER_SIZE);
-		printf("valor i: %d\n", i);
 		if (i == -1)
 		{
 			if (guardado)
 				free(guardado);
 			return (NULL);
 		}
-		else if (i == 1)
+		else if (i > 0)
 		{		
-			printf("valor guardado: %s\n", guardado);
 			new_guardado = ft_strjoin(new_guardado, guardado);
-			printf("valor NEWguardado: %s\n", new_guardado);
+			printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
 				return (NULL);
 		}
+		else
+		{
+			printf("HOLA ALFREDITO EL TEXTO HA TERMINADO Y NO DA SEGMENTATION FAULT JE JE JE");
+			return (0);
+		}
 	}
-	//compiamos linea en line
-	printf("-------- Valor de la line sin limpiar: %s ------\n", new_guardado);
 	line = ft_get_line(new_guardado);
-	printf("Este es el valor de line: %s\n", line);
-	//borramos line en new_guardado
+	//printf("Valor line:%s\n", line);
 	new_guardado = ft_clean(new_guardado);
-	printf("Resto de la line, value of new_guardado %s\n", new_guardado);
-	//printf("Mida del retorn del read: %d\n", i);
+	//printf("Valor new_guardado %s\n", new_guardado);
 	return (line);
 }
