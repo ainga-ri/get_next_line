@@ -61,20 +61,20 @@ char	*get_next_line(int fd)
 	{
 		i = read(fd, guardado, BUFFER_SIZE);
 		printf("valor i: %d\n", i);
-		if (i == -1 || i == 0)
+		if (i == -1)
 		{
 			if (guardado)
 				free(guardado);
 			return (NULL);
 		}
-		printf("valor guardado: %s\n", guardado);
-		new_guardado = ft_strjoin(new_guardado, guardado);
-		printf("valor NEWguardado: %s\n", new_guardado);
-		if (!new_guardado)
-			return (NULL);
-		/* Cuando tenemos unicamente una linea que solo tendra \0, iterara infinitamente */
-		if (ft_strchr(guardado, '\0'))
-			i = 0;
+		else if (i == 1)
+		{		
+			printf("valor guardado: %s\n", guardado);
+			new_guardado = ft_strjoin(new_guardado, guardado);
+			printf("valor NEWguardado: %s\n", new_guardado);
+			if (!new_guardado)
+				return (NULL);
+		}
 	}
 	//compiamos linea en line
 	printf("-------- Valor de la line sin limpiar: %s ------\n", new_guardado);
