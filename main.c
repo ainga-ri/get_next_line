@@ -17,20 +17,6 @@ int main (void)
 		tmp = get_next_line(fd);
 		//printf("hola");
 	}
-	/*
-	tmp = get_next_line(fd);
-	printf("%s\n", tmp);
-	free(tmp);
-	tmp = get_next_line(fd);
-	printf("%s\n", tmp);
-	free(tmp);
-	tmp = get_next_line(fd);
-	printf("%s\n", tmp);
-	free(tmp);
-	*/
-	//printf("%s\n", get_next_line(fd));
-//	printf("%s\n", get_next_line(fd));
-//	printf("%s\n", get_next_line(fd));
 	close(fd);
 	return (0);
 
