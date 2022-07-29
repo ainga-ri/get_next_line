@@ -52,6 +52,7 @@ char	*get_next_line(int fd)
 	static char	*new_guardado = "";
 	int		i;
 	char	*line;
+	//char	*fre;
 	
 	i = 1;
 	guardado = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
@@ -71,7 +72,9 @@ char	*get_next_line(int fd)
 		}
 		else if (i > 0)
 		{
+			//--------fre = new_guardado;
 			new_guardado = ft_strjoin(new_guardado, guardado);
+			//------free(fre);
 			//free(new_guardado);
 			//printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
