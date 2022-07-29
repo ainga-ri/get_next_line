@@ -95,3 +95,17 @@ void	*ft_calloc(size_t count, size_t size)
 	}
 	return (s);
 }
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*ns;
+
+	ns = s;
+	i = 0;
+	while (i < n)
+	{
+		ns[i] = '\0';
+		i++;
+	}
+}
