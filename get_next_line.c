@@ -46,15 +46,33 @@ char	*ft_clean(char *str)
 	return (rest);
 }
 
+char	*ft_copy(char	*src)
+{
+	char	*dst;
+	int	i;
+
+	i = 0;
+	dst = (char *) ft_calloc(ft_strlen(src),sizeof(char));
+	if (!dst)
+		return (NULL);
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	return (dst);
+}
+
 char	*get_next_line(int fd)
 {	
 	char	*guardado;
 	static char	*new_guardado = "";
 	int		i;
 	char	*line;
-	//char	*fre;
+	char	*concat;
 	
 	i = 1;
+	concat = "";
 	guardado = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!guardado)
 		return (NULL);
@@ -72,23 +90,42 @@ char	*get_next_line(int fd)
 		}
 		else if (i > 0)
 		{
-			//--------fre = new_guardado;
-			new_guardado = ft_strjoin(new_guardado, guardado);
-			//------free(fre);
-			//free(new_guardado);
+			if (ft_strlen(new_guardado) > 0)
+			{
+				if (ft_strlen(concat) > 0)
+			//memcpy(fre, new_guardado, ft_strlen(new_guardado));
+					free(concat);
+				concat = ft_copy(new_guardado);
+				free(new_guardado);
+				new_guardado = "";
+			}
+			new_guardado = ft_strjoin(concat, guardado);
+			printf("valor de new guardado en while %s\n", new_guardado);
+			if (ft_strlen(concat) > 0)
+				free(concat);
+			concat = ft_copy(new_guardado);
+			printf("donde %s\n", concat);
+			free(new_guardado);
+			new_guardado = "";
 			//printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
 				return (NULL);
 		}
 	}
-
-	line = ft_get_line(new_guardado);
+	free(guardado);
+	if (ft_strlen(concat) > 0)
+	{
+		line = ft_get_line(/*new_guardado*/ concat);
 	//printf("Valor new_guardado before clean %s\n", new_guardado);
 	//printf("Valor line:%s\n", line);
-	if (ft_strlen(line) == 0)
-		return (NULL);
+		if (ft_strlen(line) == 0)
+			return (NULL);
+		else
+			new_guardado = ft_clean(/*new_guardado*/concat);
+		printf("Valor new_guardado %s\n", new_guardado);
+		free(concat);
+		return (line);
+	}
 	else
-		new_guardado = ft_clean(new_guardado);
-	//printf("Valor new_guardado %s\n", new_guardado);
-	return (line);
+		return (NULL);
 }
