@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msindreu <msindreu@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 16:14:58 by msindreu          #+#    #+#             */
-/*   Updated: 2022/07/28 10:15:41 by ainga-ri         ###   ########.fr       */
+/*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
+/*   Updated: 2022/08/01 21:46:42 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*ft_get_line(char *str)
@@ -48,6 +49,7 @@ char	*ft_clean(char *str)
 
 char	*ft_copy(char	*src)
 {
+	printf("new_g en ftcopy: %s\n", src);
 	char	*dst;
 	int	i;
 
@@ -58,9 +60,22 @@ char	*ft_copy(char	*src)
 	while (src[i])
 	{
 		dst[i] = src[i];
+		printf("number is %d and char is %c\n", i, dst[i]);
 		i++;
 	}
+	printf("new_g en ftcopy AFTER WHILE: %s\n", dst);
 	return (dst);
+}
+
+void ft_freecopy(char *new_guardado, char **concat)
+{
+	printf("new_g en freecopy: %s\n", new_guardado);
+	if (ft_strlen(*concat) > 0)
+		free(*concat);
+	*concat = ft_copy(new_guardado);
+	printf("concat vale: %s\n", *concat);
+	free(new_guardado);
+	new_guardado = "";
 }
 
 char	*get_next_line(int fd)
@@ -81,7 +96,7 @@ char	*get_next_line(int fd)
 		ft_bzero(guardado, BUFFER_SIZE);
 		i = read(fd, guardado, BUFFER_SIZE);
 		//printf("Valor de guardado: %s has size: %zu\n", guardado, ft_strlen(guardado));
-		printf("valor de i: %d\n", i);
+		//printf("valor de i: %d\n", i);
 		if (i == -1)
 		{
 			if (guardado)
@@ -90,23 +105,13 @@ char	*get_next_line(int fd)
 		}
 		// change of variable, make it a function
 		if (ft_strlen(new_guardado) > 0)
-		{
-			if (ft_strlen(concat) > 0)
-				free(concat);
-			concat = ft_copy(new_guardado);
-			free(new_guardado);
-			new_guardado = "";
-		}
+			ft_freecopy(new_guardado, &concat);
 		if (i > 0)
 		{
 			new_guardado = ft_strjoin(concat, guardado);
-			//printf("valor de new guardado en while %s\n", new_guardado);
-			if (ft_strlen(concat) > 0)
-				free(concat);
-			concat = ft_copy(new_guardado);
+			//printf("valor de new guardado en while %s\n", new_guardado);	
+			ft_freecopy(new_guardado, &concat);
 			//printf("donde %s\n", concat);
-			free(new_guardado);
-			new_guardado = "";
 			//printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
 				return (NULL);
@@ -115,13 +120,13 @@ char	*get_next_line(int fd)
 	free(guardado);
 	if (ft_strlen(concat) > 0)
 	{
-		line = ft_get_line(/*new_guardado*/ concat);
-	//printf("Valor new_guardado before clean %s\n", new_guardado);
+		line = ft_get_line(concat);
+		//printf("Valor new_guardado before clean %s\n", new_guardado);
 		//printf("Valor line:%s\n", line);
 		if (ft_strlen(line) == 0)
 			return (NULL);
 		else
-			new_guardado = ft_clean(/*new_guardado*/concat);
+			new_guardado = ft_clean(concat);
 		printf("Valor new_guardado %s\n", new_guardado);
 		free(concat);
 		return (line);
