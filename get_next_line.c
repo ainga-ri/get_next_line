@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msindreu <msindreu@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alfredun <msindreu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:14:58 by msindreu          #+#    #+#             */
 /*   Updated: 2022/08/01 20:08:25 by ainga-ri         ###   ########.fr       */
