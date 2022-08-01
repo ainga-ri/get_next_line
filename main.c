@@ -3,9 +3,9 @@
 int main (void)
 {
 	int	fd;
-	char tmp[1000000];
+	char *tmp;
 
-	fd = open("test", O_RDONLY);
+	fd = open("alfred.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
 		return (0);
