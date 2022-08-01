@@ -81,30 +81,30 @@ char	*get_next_line(int fd)
 		ft_bzero(guardado, BUFFER_SIZE);
 		i = read(fd, guardado, BUFFER_SIZE);
 		//printf("Valor de guardado: %s has size: %zu\n", guardado, ft_strlen(guardado));
-		//printf("valor de i: %d\n", i);
+		printf("valor de i: %d\n", i);
 		if (i == -1)
 		{
 			if (guardado)
 				free(guardado);
 			return (NULL);
 		}
-		else if (i > 0)
+		// change of variable, make it a function
+		if (ft_strlen(new_guardado) > 0)
 		{
-			if (ft_strlen(new_guardado) > 0)
-			{
-				if (ft_strlen(concat) > 0)
-			//memcpy(fre, new_guardado, ft_strlen(new_guardado));
-					free(concat);
-				concat = ft_copy(new_guardado);
-				free(new_guardado);
-				new_guardado = "";
-			}
-			new_guardado = ft_strjoin(concat, guardado);
-			printf("valor de new guardado en while %s\n", new_guardado);
 			if (ft_strlen(concat) > 0)
 				free(concat);
 			concat = ft_copy(new_guardado);
-			printf("donde %s\n", concat);
+			free(new_guardado);
+			new_guardado = "";
+		}
+		if (i > 0)
+		{
+			new_guardado = ft_strjoin(concat, guardado);
+			//printf("valor de new guardado en while %s\n", new_guardado);
+			if (ft_strlen(concat) > 0)
+				free(concat);
+			concat = ft_copy(new_guardado);
+			//printf("donde %s\n", concat);
 			free(new_guardado);
 			new_guardado = "";
 			//printf("Valor new_guardado:%s\n", new_guardado);
@@ -117,7 +117,7 @@ char	*get_next_line(int fd)
 	{
 		line = ft_get_line(/*new_guardado*/ concat);
 	//printf("Valor new_guardado before clean %s\n", new_guardado);
-	//printf("Valor line:%s\n", line);
+		//printf("Valor line:%s\n", line);
 		if (ft_strlen(line) == 0)
 			return (NULL);
 		else
