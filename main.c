@@ -11,11 +11,9 @@ int main (void)
 		return (0);
 	while (tmp)
 	{
-		printf("main: %s\n", tmp);
+		printf("%s\n", tmp);
 		free(tmp);
-		//printf("hola???");
 		tmp = get_next_line(fd);
-		//printf("hola");
 	}
 	close(fd);
 	return (0);
