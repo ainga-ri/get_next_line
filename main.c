@@ -5,7 +5,7 @@ int main (void)
 	int	fd;
 	char *tmp;
 
-	fd = open("alfred.txt", O_RDONLY);
+	fd = open("himarina.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
 		return (0);

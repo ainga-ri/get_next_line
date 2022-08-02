@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/02 17:46:29 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/02 22:27:22 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ char	*ft_clean(char *str)
 	}
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	if (!rest)
-	{
-		printf("Rest existe??\n");
 		return (NULL);
-	}
 	return (rest);
 }
 
@@ -53,7 +50,9 @@ char	*ft_copy(char *new_guardado)
 	int		i;
 
 	i = 0;
-	aux = ft_calloc(ft_strlen(new_guardado), sizeof(char));
+	aux = (char *) malloc(sizeof(char) * ft_strlen(new_guardado));
+	if (!aux)
+		return (NULL);
 	while (new_guardado[i])
 	{
 		aux[i] = new_guardado[i];
@@ -79,26 +78,48 @@ char	*get_next_line(int fd)
 		i = read(fd, guardado, BUFFER_SIZE);
 		if (i == -1)
 		{
-			if (guardado)
-				free(guardado);
+			free(guardado);
 			return (NULL);
 		}
 		else if (i > 0)
 		{
+			//printf("new guardado es %s\n", new_guardado);
 			aux = ft_copy(new_guardado);
+			//printf("aux es %s\n", aux);
+			if (!aux)
+			{
+				free(guardado);
+				return (NULL);
+			}
+			/* It should be another way */
 			if (ft_strlen(new_guardado) > 0)
 				free(new_guardado);
 			new_guardado = ft_strjoin(aux, guardado);
-			if (!new_guardado)
-				return (NULL);
+			//printf("%s\n", aux);
 			free(aux);
+			if (!new_guardado)
+			{
+				free(guardado);
+				return (NULL);
+			}
 		}
 	}
 	free(guardado);
-	line = ft_get_line(new_guardado);
-	if (ft_strlen(line) == 0)
-		return (NULL);
+	line = ft_get_line(new_guardado);	
+	if (ft_strlen(line) > 0)
+	{	
+		//printf("static before leaving out: %s\n", aux);
+		aux = ft_copy(new_guardado);
+		//printf("valor de aux: %s\n", aux);
+		free(new_guardado);
+		new_guardado = ft_clean(aux);
+		//printf("static before leaving out: %s\n", new_guardado);
+		free(aux);
+		return (line);
+	}
 	else
-		new_guardado = ft_clean(new_guardado);
-	return (line);
+	{
+		free(line);
+		return (NULL);
+	}
 }
