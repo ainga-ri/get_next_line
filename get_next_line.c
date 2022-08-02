@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/01 21:46:42 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:13:01 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,27 @@ char	*ft_copy(char	*src)
 	while (src[i])
 	{
 		dst[i] = src[i];
-		printf("number is %d and char is %c\n", i, dst[i]);
+		printf("number is %d and char is %c\n", i, src[i]);
 		i++;
 	}
 	printf("new_g en ftcopy AFTER WHILE: %s\n", dst);
+	i = 0;
+	while (dst[i])
+	{
+		printf("value of dst[%d] is %c\n", i, dst[i]);
+		i++;
+	}
 	return (dst);
 }
 
 void ft_freecopy(char *new_guardado, char **concat)
 {
-	printf("new_g en freecopy: %s\n", new_guardado);
+	printf("new_g en freecopy: %s y tiene len: %zu\n", new_guardado, ft_strlen(new_guardado));
 	if (ft_strlen(*concat) > 0)
 		free(*concat);
 	*concat = ft_copy(new_guardado);
-	printf("concat vale: %s\n", *concat);
+	printf("----------------whatdefuck is this: %s and whatisthesize %d\n", ft_copy(new_guardado), (int)ft_strlen(ft_copy(new_guardado)));
+	printf("concat vale: %s tiene len %zu\n", *concat, ft_strlen(*concat));
 	free(new_guardado);
 	new_guardado = "";
 }
@@ -103,7 +110,6 @@ char	*get_next_line(int fd)
 				free(guardado);
 			return (NULL);
 		}
-		// change of variable, make it a function
 		if (ft_strlen(new_guardado) > 0)
 			ft_freecopy(new_guardado, &concat);
 		if (i > 0)
@@ -111,7 +117,6 @@ char	*get_next_line(int fd)
 			new_guardado = ft_strjoin(concat, guardado);
 			//printf("valor de new guardado en while %s\n", new_guardado);	
 			ft_freecopy(new_guardado, &concat);
-			//printf("donde %s\n", concat);
 			//printf("Valor new_guardado:%s\n", new_guardado);
 			if (!new_guardado)
 				return (NULL);
