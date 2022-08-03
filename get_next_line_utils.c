@@ -1,26 +1,30 @@
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *tic, char *bff)
 {
 	char		*nstr;
 	size_t		i;
+	size_t		j;
 
 	i = 0;
-	nstr = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (*tic == '\0')
+		tic = (char *) calloc(1, sizeof(char));
+	else
+		nstr = (char *) calloc(ft_strlen(tic) + ft_strlen(bff), sizeof(char));
 	if (!nstr)
 		return (NULL);
-	while (i < ft_strlen(s1))
+	while (tic[i])
 	{
-		nstr[i] = s1[i];
+		nstr[i] = tic[i];
 		i++;
 	}
-	i = 0;
-	while (i < ft_strlen(s2))
+	j = 0;
+	while (bff[j])
 	{
-		nstr[ft_strlen(s1) + i] = s2[i];
-		i++;
+		nstr[i + j] = bff[j];
+		j++;
 	}
-	nstr[ft_strlen(s1) + i] = '\0';
+	free(tic);
 	return (nstr);
 }
 
@@ -87,10 +91,10 @@ void	*ft_calloc(size_t count, size_t size)
 	i = 0;
 	s = (void *) malloc(count * size);
 	if (!s)
-		return (0);
+		return (NULL);
 	while (i < (count * size))
 	{
-		((char *)s)[i] = 0;
+		((char *)s)[i] = '\0';
 		i++;
 	}
 	return (s);

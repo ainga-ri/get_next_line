@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/02 22:27:22 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:23:41 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_clean(char *str)
 	int 	i;
 
 	i = 0;
-	while (str[i] != '\n' && str[i] != '\0')
+	while (str && str[i] && str[i] != '\n' && str[i] != '\0')
 	{
 		i++;
 	}
@@ -44,76 +44,63 @@ char	*ft_clean(char *str)
 	return (rest);
 }
 
-char	*ft_copy(char *new_guardado)
-{
-	char	*aux;
-	int		i;
 
-	i = 0;
-	aux = (char *) malloc(sizeof(char) * ft_strlen(new_guardado));
-	if (!aux)
-		return (NULL);
-	while (new_guardado[i])
-	{
-		aux[i] = new_guardado[i];
-		i++;
-	}
-	return (aux);
-}
 char	*get_next_line(int fd)
 {	
-	char	*guardado;
-	static char	*new_guardado = "";
+	char	*buffer;
+	static char	*concat= "";
 	int		i;
 	char	*line;
 	char	*aux;
 
 	i = 1;
-	guardado = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!guardado)
+	buffer = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buffer)
 		return (NULL);
-	while (!ft_strchr(guardado, '\n') && i > 0)
+	while (!ft_strchr(buffer, '\n') && i > 0)
 	{
-		ft_bzero(guardado, BUFFER_SIZE);
-		i = read(fd, guardado, BUFFER_SIZE);
+		ft_bzero(buffer, BUFFER_SIZE);
+		i = read(fd, buffer, BUFFER_SIZE);
+		//printf("buffer is %s\n", buffer);
 		if (i == -1)
 		{
-			free(guardado);
+			free(buffer);
 			return (NULL);
 		}
 		else if (i > 0)
 		{
-			//printf("new guardado es %s\n", new_guardado);
-			aux = ft_copy(new_guardado);
+			//printf("concat es %s\n", concat);
+			aux = strdup(concat);
 			//printf("aux es %s\n", aux);
 			if (!aux)
 			{
-				free(guardado);
+				free(buffer);
 				return (NULL);
 			}
-			/* It should be another way */
-			if (ft_strlen(new_guardado) > 0)
-				free(new_guardado);
-			new_guardado = ft_strjoin(aux, guardado);
-			//printf("%s\n", aux);
+			if (concat[0] != '\0')
+				free(concat);	
+			//printf("It should be another way\n");
+			concat = ft_strjoin(aux, buffer);
+			//printf("concat before join es %s\n", concat);
 			free(aux);
-			if (!new_guardado)
+			if (!concat)
 			{
-				free(guardado);
+				free(buffer);
 				return (NULL);
 			}
 		}
 	}
-	free(guardado);
-	line = ft_get_line(new_guardado);	
+	free(buffer);
+	line = ft_get_line(concat);
+	//printf("line ready to deliver: %s\n", line);	
 	if (ft_strlen(line) > 0)
 	{	
-		//printf("static before leaving out: %s\n", aux);
-		aux = ft_copy(new_guardado);
-		//printf("valor de aux: %s\n", aux);
-		free(new_guardado);
-		new_guardado = ft_clean(aux);
-		//printf("static before leaving out: %s\n", new_guardado);
+		//printf("static before leaving out: %s\n", concat);
+		aux = strdup(concat);
+		//printf("valor de aux: ||| %s |||\n", aux);
+		free(concat);
+		concat = ft_clean(aux);
+		//printf("concat cleaned: %s\n", concat);
 		free(aux);
 		return (line);
 	}
