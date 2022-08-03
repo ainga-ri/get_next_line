@@ -8,9 +8,14 @@ char	*ft_strjoin(char *tic, char *bff)
 
 	i = 0;
 	if (*tic == '\0')
+	{
 		tic = (char *) calloc(1, sizeof(char));
+		if (!tic)
+			return (NULL);
+		nstr = (char *) calloc(1 + ft_strlen(bff), sizeof(char));
+	}
 	else
-		nstr = (char *) calloc(ft_strlen(tic) + ft_strlen(bff), sizeof(char));
+		nstr = (char *) calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
 	if (!nstr)
 		return (NULL);
 	while (tic[i])

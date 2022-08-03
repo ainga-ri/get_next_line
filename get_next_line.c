@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/03 19:23:41 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:46:08 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*ft_get_line(char *str)
 		i++;
 	}
 	line = ft_substr(str, 0, i);
+
 	if (!line)
 		return (NULL);
 	return (line);
@@ -39,6 +40,7 @@ char	*ft_clean(char *str)
 		i++;
 	}
 	rest = ft_substr(str, i + 1, ft_strlen(str));
+	free(str);
 	if (!rest)
 		return (NULL);
 	return (rest);
@@ -51,7 +53,7 @@ char	*get_next_line(int fd)
 	static char	*concat= "";
 	int		i;
 	char	*line;
-	char	*aux;
+	//char	*aux;
 
 	i = 1;
 	buffer = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
@@ -70,19 +72,19 @@ char	*get_next_line(int fd)
 		else if (i > 0)
 		{
 			//printf("concat es %s\n", concat);
-			aux = strdup(concat);
+			//aux = strdup(concat);
 			//printf("aux es %s\n", aux);
-			if (!aux)
-			{
-				free(buffer);
-				return (NULL);
-			}
-			if (concat[0] != '\0')
-				free(concat);	
+			//if (!aux)
+			//{
+			//	free(buffer);
+			//	return (NULL);
+			//}
+			//if (concat[0] != '\0')
+			//	free(concat);	
 			//printf("It should be another way\n");
-			concat = ft_strjoin(aux, buffer);
+			concat = ft_strjoin(concat, buffer);
 			//printf("concat before join es %s\n", concat);
-			free(aux);
+			//free(aux);
 			if (!concat)
 			{
 				free(buffer);
@@ -96,12 +98,12 @@ char	*get_next_line(int fd)
 	if (ft_strlen(line) > 0)
 	{	
 		//printf("static before leaving out: %s\n", concat);
-		aux = strdup(concat);
+		//aux = strdup(concat);
 		//printf("valor de aux: ||| %s |||\n", aux);
-		free(concat);
-		concat = ft_clean(aux);
+		//free(concat);
+		concat = ft_clean(concat);
 		//printf("concat cleaned: %s\n", concat);
-		free(aux);
+		//free(aux);
 		return (line);
 	}
 	else
