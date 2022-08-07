@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/07 17:35:37 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:31:20 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ char	*ft_get_line(char *str)
 	int 	i;
 
 	i = 0;
+	if (*str == '\0')
+		return (NULL);
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	if (str[i] == '\n')
-		line = ft_substr(str, 0, i + 1);
-	else
-		line = ft_substr(str, 0, i);
+	line = ft_substr(str, 0, i + 1);
 	if (!line)
 		return (NULL);
 	return (line);
@@ -58,7 +57,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (!ft_strchr(buffer, '\n') && i > 0)
 	{
-		ft_bzero(buffer, BUFFER_SIZE);
+		//ft_bzero(buffer, BUFFER_SIZE);
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
 		{
@@ -77,13 +76,15 @@ char	*get_next_line(int fd)
 	}
 	free(buffer);
 	line = ft_get_line(concat);
-	if (ft_strlen(concat) > 0)
+	if (line)
 	{	
 		concat = ft_clean(concat);
 		return (line);
 	}
 	else
 	{
+		// Concat se va freeando dentro de ft_clean, pero cuando acaba, no entra en ft_clean y se ha quedado 1 en el aire, entonces entra en el else, y pam, hay que freearlo
+		// Hay que ver que carajo esta haciendo con un fkin char
 		free(line);
 		return (NULL);
 	}
