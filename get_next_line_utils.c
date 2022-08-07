@@ -66,6 +66,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	size;
 
 	i = 0;
+	
 	if (ft_strlen(s) <= start || len == 0 || ft_strlen(s) == 0)
 		size = 0;
 	else if (len <= ft_strlen(s) && start + len < ft_strlen(s))
@@ -76,6 +77,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (subs == NULL)
 		return (0);
 	*subs = '\0';
+
 	if (start < ft_strlen(s))
 	{
 		while (i < size)

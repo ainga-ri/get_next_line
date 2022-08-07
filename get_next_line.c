@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/03 20:02:01 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/07 17:35:37 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ char	*ft_get_line(char *str)
 
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
-	{
 		i++;
-	}
-	line = ft_substr(str, 0, i);
+	if (str[i] == '\n')
+		line = ft_substr(str, 0, i + 1);
+	else
+		line = ft_substr(str, 0, i);
 	if (!line)
 		return (NULL);
 	return (line);
@@ -34,10 +35,8 @@ char	*ft_clean(char *str)
 	int 	i;
 
 	i = 0;
-	while (str && str[i] && str[i] != '\n' && str[i] != '\0')
-	{
+	while (str[i] != '\n' && str[i] != '\0')
 		i++;
-	}
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	free(str);
 	if (!rest)
