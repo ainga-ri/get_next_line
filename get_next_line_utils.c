@@ -1,26 +1,35 @@
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *tic, char *bff)
 {
 	char		*nstr;
 	size_t		i;
+	size_t		j;
 
 	i = 0;
-	nstr = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (*tic == '\0')
+	{
+		tic = (char *) ft_calloc(1, sizeof(char));
+		if (!tic)
+			return (NULL);
+		nstr = (char *) ft_calloc(1 + ft_strlen(bff), sizeof(char));
+	}
+	else
+		nstr = (char *) ft_calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
 	if (!nstr)
 		return (NULL);
-	while (i < ft_strlen(s1))
+	while (tic[i])
 	{
-		nstr[i] = s1[i];
+		nstr[i] = tic[i];
 		i++;
 	}
-	i = 0;
-	while (i < ft_strlen(s2))
+	j = 0;
+	while (bff[j])
 	{
-		nstr[ft_strlen(s1) + i] = s2[i];
-		i++;
+		nstr[i + j] = bff[j];
+		j++;
 	}
-	nstr[ft_strlen(s1) + i] = '\0';
+	free(tic);
 	return (nstr);
 }
 
@@ -57,17 +66,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	size;
 
 	i = 0;
+	// No copiar cuando el len de s is smaller than start or also when len is 0 or when strlen is 0
 	if (ft_strlen(s) <= start || len == 0 || ft_strlen(s) == 0)
 		size = 0;
+	// si el len es mas peque o igual a str, copia solo len, pero si start mas len es mas peque que el str entero, entonces tambien copia la len
 	else if (len <= ft_strlen(s) && start + len < ft_strlen(s))
 		size = len;
+	// copiame todo el string
 	else
 		size = ft_strlen(s) - start;
 	subs = (char *) malloc(size + 1);
 	if (subs == NULL)
 		return (0);
-	*subs = '\0';
-	if (start < ft_strlen(s))
+	if (size > 0)
 	{
 		while (i < size)
 		{
@@ -76,6 +87,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 		subs[i] = '\0';
 	}
+	else 
+		*subs = '\0';
 	return (subs);
 }
 
@@ -87,10 +100,10 @@ void	*ft_calloc(size_t count, size_t size)
 	i = 0;
 	s = (void *) malloc(count * size);
 	if (!s)
-		return (0);
+		return (NULL);
 	while (i < (count * size))
 	{
-		((char *)s)[i] = 0;
+		((char *)s)[i] = '\0';
 		i++;
 	}
 	return (s);
