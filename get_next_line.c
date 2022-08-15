@@ -6,11 +6,13 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 20:38:42 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/07 18:31:20 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/15 18:02:55 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char *ft_strdup(const char *s1);
 
 char	*ft_get_line(char *str)
 {
@@ -18,7 +20,7 @@ char	*ft_get_line(char *str)
 	int 	i;
 
 	i = 0;
-	if (*str == '\0')
+	if (!str || *str == '\0')
 		return (NULL);
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
@@ -36,6 +38,7 @@ char	*ft_clean(char *str)
 	i = 0;
 	while (str[i] != '\n' && str[i] != '\0')
 		i++;
+	printf("Car is:%c, I is: %d, Last: %c, Length %zu\n", str[i + 1], i + 1, str[ft_strlen(str) - 1], ft_strlen(str));
 	rest = ft_substr(str, i + 1, ft_strlen(str));
 	free(str);
 	if (!rest)
@@ -46,22 +49,29 @@ char	*ft_clean(char *str)
 
 char	*get_next_line(int fd)
 {	
-	char	*buffer;
-	static char	*concat= "";
-	int		i;
-	char	*line;
+	char		*buffer;
+	static char	*concat;
+	int			i;
+	char		*line;
 
 	i = 1;
 	buffer = (char *) ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
+	{
+		free(concat);
 		return (NULL);
+	}
 	while (!ft_strchr(buffer, '\n') && i > 0)
 	{
 		//ft_bzero(buffer, BUFFER_SIZE);
 		i = read(fd, buffer, BUFFER_SIZE);
+		printf("Buffer %s\n", buffer);
+//		if (i == 0 && !concat)
+//			return (NULL);
 		if (i == -1)
 		{
 			free(buffer);
+			free(concat);
 			return (NULL);
 		}
 		else if (i > 0)
@@ -69,10 +79,12 @@ char	*get_next_line(int fd)
 			concat = ft_strjoin(concat, buffer);
 			if (!concat)
 			{
+				free(concat);
 				free(buffer);
 				return (NULL);
 			}
 		}
+		buffer[0] = '\0';
 	}
 	free(buffer);
 	line = ft_get_line(concat);
@@ -86,6 +98,7 @@ char	*get_next_line(int fd)
 		// Concat se va freeando dentro de ft_clean, pero cuando acaba, no entra en ft_clean y se ha quedado 1 en el aire, entonces entra en el else, y pam, hay que freearlo
 		// Hay que ver que carajo esta haciendo con un fkin char
 		free(line);
+		free(concat);
 		return (NULL);
 	}
 }
