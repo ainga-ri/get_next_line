@@ -7,7 +7,7 @@ char	*ft_strjoin(char *tic, char *bff)
 	size_t		j;
 
 	i = 0;
-	if (*tic == '\0')
+	if (!tic)
 	{
 		tic = (char *) ft_calloc(1, sizeof(char));
 		if (!tic)
@@ -78,6 +78,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	subs = (char *) malloc(size + 1);
 	if (subs == NULL)
 		return (0);
+//	subs[0] = '\0';
 	if (size > 0)
 	{
 		while (i < size)
@@ -107,18 +108,4 @@ void	*ft_calloc(size_t count, size_t size)
 		i++;
 	}
 	return (s);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*ns;
-
-	ns = s;
-	i = 0;
-	while (i < n)
-	{
-		ns[i] = '\0';
-		i++;
-	}
 }
