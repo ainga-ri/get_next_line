@@ -6,7 +6,7 @@
 /*   By: ainga-ri <ainga-ri@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 18:32:48 by ainga-ri          #+#    #+#             */
-/*   Updated: 2022/08/15 18:33:45 by ainga-ri         ###   ########.fr       */
+/*   Updated: 2022/08/16 16:12:20 by ainga-ri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ char	*ft_strjoin(char *tic, char *bff)
 	i = 0;
 	if (!tic)
 	{
-		tic = (char *) ft_calloc(1, sizeof(char));
+		tic = ft_calloc(1, sizeof(char));
 		if (!tic)
 			return (NULL);
-		nstr = (char *) ft_calloc(1 + ft_strlen(bff), sizeof(char));
+		nstr = ft_calloc(1 + ft_strlen(bff), sizeof(char));
 	}
 	else
-		nstr = (char *) ft_calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
+		nstr = ft_calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
 	if (!nstr)
 		return (NULL);
 	while (tic[i])
@@ -71,6 +71,7 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char			*subs;
@@ -78,19 +79,16 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	size;
 
 	i = 0;
-	// No copiar cuando el len de s is smaller than start or also when len is 0 or when strlen is 0
 	if (ft_strlen(s) <= start || len == 0 || ft_strlen(s) == 0)
 		size = 0;
-	// si el len es mas peque o igual a str, copia solo len, pero si start mas len es mas peque que el str entero, entonces tambien copia la len
 	else if (len <= ft_strlen(s) && start + len < ft_strlen(s))
 		size = len;
-	// copiame todo el string
 	else
 		size = ft_strlen(s) - start;
 	subs = (char *) malloc(size + 1);
 	if (subs == NULL)
 		return (0);
-//	subs[0] = '\0';
+	*subs = '\0';
 	if (size > 0)
 	{
 		while (i < size)
@@ -100,8 +98,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		}
 		subs[i] = '\0';
 	}
-	else 
-		*subs = '\0';
 	return (subs);
 }
 
