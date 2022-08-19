@@ -1,12 +1,12 @@
 #include "get_next_line.h"
-#include "get_next_line_bonus.h"
+//#include "get_next_line_bonus.h"
 
 int main (void)
 {
 	int	fd;
 	char *tmp;
 
-	fd = open("tester.txt", O_RDONLY);
+	fd = open("foo.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
 		return (0);

@@ -43,6 +43,50 @@ char	*ft_clean(char *str)
 	return (rest);
 }
 
+static _Bool ft_concatenation(int fd, int *i,  char *buffer, char **concat)
+{
+	while (!ft_strchr(buffer, '\n') && i > 0)
+	{
+		*i = read(fd, buffer, BUFFER_SIZE);
+		if (*i == -1)
+		{
+		if (*concat)
+				free(*concat);
+			free(buffer);
+			return (0);
+		}
+		else if (i > 0)
+		{
+			buffer[*i] = '\0';
+			*concat = ft_strjoin(*concat, buffer);
+			if (!*concat)
+			{
+				if (*concat)
+					free(*concat);
+				free(buffer);
+				return (0);
+			}
+		}
+	}
+	return (1);
+}
+
+char	*ft_finish_and_clean(char *line, char **concat)
+{
+	if (line)
+	{	
+		*concat = ft_clean(*concat);
+		return (line);
+	}
+	else
+	{
+		free(line);
+		if (*concat)
+			free(*concat);
+		return (NULL);
+	}
+}
+
 char	*get_next_line(int fd)
 {	
 	char		*buffer;
@@ -58,8 +102,14 @@ char	*get_next_line(int fd)
 			free(concat);
 		return (NULL);
 	}
+	if (!ft_concatenation(fd, &i, buffer, &concat))
+		return (NULL);
+	/*
 	while (!ft_strchr(buffer, '\n') && i > 0)
 	{
+		if (!ft_concatenation(fd, &i, buffer, &concat))
+			return (NULL);
+		
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
 		{
@@ -80,18 +130,9 @@ char	*get_next_line(int fd)
 				return (NULL);
 			}
 		}
-	}
+		
+	}*/
 	free(buffer);
 	line = ft_get_line(concat);
-	if (line)
-	{	
-		concat = ft_clean(concat);
-		return (line);
-	}
-	else
-	{
-		free(line);
-		free(concat);
-		return (NULL);
-	}
+	return (ft_finish_and_clean(line, &concat));
 }
