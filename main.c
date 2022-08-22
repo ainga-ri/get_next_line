@@ -6,7 +6,7 @@ int main (void)
 	int	fd;
 	char *tmp;
 
-	fd = open("foo.txt", O_RDONLY);
+	fd = open("emptytext.txt", O_RDONLY);
 	tmp = get_next_line(fd);
 	if (!tmp)
 		return (0);
