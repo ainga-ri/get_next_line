@@ -12,13 +12,10 @@
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char *tic, char *bff)
+char	*ft_strjoin(char *tic, char *bff, size_t i, size_t j)
 {
 	char		*nstr;
-	size_t		i;
-	size_t		j;
 
-	i = 0;
 	if (!tic)
 	{
 		tic = ft_calloc(1, sizeof(char));
@@ -35,7 +32,6 @@ char	*ft_strjoin(char *tic, char *bff)
 		nstr[i] = tic[i];
 		i++;
 	}
-	j = 0;
 	while (bff[j])
 	{
 		nstr[i + j] = bff[j];

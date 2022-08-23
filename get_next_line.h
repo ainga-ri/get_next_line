@@ -21,7 +21,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char *tic, char *bff);
+char	*ft_strjoin(char *tic, char *bff, size_t i, size_t j);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
