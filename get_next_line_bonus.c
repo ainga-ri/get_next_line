@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_get_line(char *str)
 {
@@ -47,12 +47,17 @@ static _Bool	ft_concatenation(int fd, int *i, char *buffer, char **concat)
 {
 	size_t	first_join;
 	size_t	second_join;
-
+	
 	*i = read(fd, buffer, BUFFER_SIZE);
 	if (*i == -1)
 	{
-		//if (*concat)
-		//	free(*concat);
+		if (*concat && **concat)
+		{
+			//**concat = 0;
+			//printf("\n%s\n", *concat);
+			//printf("pointer %p\n", *concat);
+			free(*concat);
+		}
 		free(buffer);
 		return (0);
 	}
@@ -81,7 +86,10 @@ char	*ft_finish_and_clean(char *line, char **concat)
 	else
 	{
 		if (*concat)
+		{
 			free(*concat);
+			*concat = NULL;
+		}	
 		return (NULL);
 	}
 }
@@ -89,24 +97,24 @@ char	*ft_finish_and_clean(char *line, char **concat)
 char	*get_next_line(int fd)
 {	
 	char		*buffer;
-	static char	*concat;
+	static char	*concat[OPEN_MAX];
 	int			i;
 	char		*line;
-
+	
 	i = 1;
 	buffer = (char *) ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 	{
-		if (concat)
-			free(concat);
+		if (concat[fd])
+			free(concat[fd]);
 		return (NULL);
 	}
 	while (!ft_strchr(buffer, '\n') && i > 0)
 	{
-		if (!ft_concatenation(fd, &i, buffer, &concat))
+		if (!ft_concatenation(fd, &i, buffer, &concat[fd]))
 			return (NULL);
 	}
 	free(buffer);
-	line = ft_get_line(concat);
-	return (ft_finish_and_clean(line, &concat));
+	line = ft_get_line(concat[fd]);
+	return (ft_finish_and_clean(line, &concat[fd]));
 }
