@@ -13,18 +13,17 @@
 //#include "get_next_line.h"
 #include "get_next_line_bonus.h"
 
-void populate_expected(char *buffer, int n)
+void	populate_expected(char *buffer, int n)
 {
-	int i = 0;
+	int	i = 0;
 	while (i < n)
-	{
 		i += sprintf(buffer + i, "0123456789");
-	}
 	buffer[n] = 0;
 }
 
 int	main(void)
 {
+	/*
 	//char *name = "lines_around_10.txt";
 	int fd_4 = open("giant_line_nl.txt", O_RDONLY);
 	char expected[20000 + 2];
@@ -37,10 +36,10 @@ int	main(void)
 	printf("%s", get_next_line(fd_4));
 	//printf("%s", expected);
 	return (0);
-	/*
+	*/
 	char	*name = "lines_around_10.txt";
 	int fd = open(name, O_RDONLY);
-	get_next_line(30);
+	get_next_line(fd);
 	get_next_line(fd);
 	close(fd);
 	char	*temp;
@@ -51,7 +50,7 @@ int	main(void)
 	} while (temp != NULL);
 	get_next_line(fd);
 	return (0);
-	
+	/*
 	int		fd;
 	char	*tmp;
 

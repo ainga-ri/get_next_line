@@ -47,17 +47,13 @@ static _Bool	ft_concatenation(int fd, int *i, char *buffer, char **concat)
 {
 	size_t	first_join;
 	size_t	second_join;
-	
+
 	*i = read(fd, buffer, BUFFER_SIZE);
 	if (*i == -1)
 	{
-		if (*concat && **concat)
-		{
-			//**concat = 0;
-			//printf("\n%s\n", *concat);
-			//printf("pointer %p\n", *concat);
+		if (*concat)
 			free(*concat);
-		}
+		*concat = NULL;
 		free(buffer);
 		return (0);
 	}
@@ -86,10 +82,8 @@ char	*ft_finish_and_clean(char *line, char **concat)
 	else
 	{
 		if (*concat)
-		{
 			free(*concat);
-			*concat = NULL;
-		}	
+		*concat = NULL;
 		return (NULL);
 	}
 }
@@ -100,7 +94,7 @@ char	*get_next_line(int fd)
 	static char	*concat[OPEN_MAX];
 	int			i;
 	char		*line;
-	
+
 	i = 1;
 	buffer = (char *) ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
