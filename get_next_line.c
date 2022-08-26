@@ -51,8 +51,9 @@ static _Bool	ft_concatenation(int fd, int *i, char *buffer, char **concat)
 	*i = read(fd, buffer, BUFFER_SIZE);
 	if (*i == -1)
 	{
-		if (*concat && **concat)
+		if (*concat)
 			free(*concat);
+		*concat = NULL;
 		free(buffer);
 		return (0);
 	}
@@ -82,6 +83,7 @@ char	*ft_finish_and_clean(char *line, char **concat)
 	{
 		if (*concat)
 			free(*concat);
+		*concat = NULL;
 		return (NULL);
 	}
 }

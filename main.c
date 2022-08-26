@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "get_next_line.h"
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
+//#include "get_next_line_bonus.h"
 
 void	populate_expected(char *buffer, int n)
 {
@@ -37,8 +37,11 @@ int	main(void)
 	//printf("%s", expected);
 	return (0);
 	*/
-	char	*name = "lines_around_10.txt";
+	
+	char	*name = NULL;
 	int fd = open(name, O_RDONLY);
+	get_next_line(fd);
+	/*
 	get_next_line(fd);
 	get_next_line(fd);
 	close(fd);
@@ -49,6 +52,7 @@ int	main(void)
 		free(temp);
 	} while (temp != NULL);
 	get_next_line(fd);
+	*/
 	return (0);
 	/*
 	int		fd;
