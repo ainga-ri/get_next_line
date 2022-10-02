@@ -38,9 +38,9 @@ int	main(void)
 	return (0);
 	*/
 	
-	char	*name = NULL;
-	int fd = open(name, O_RDONLY);
-	get_next_line(fd);
+	//char	*name = NULL;
+	//int fd = open("./text_examples/emptytext.txt", O_RDONLY);
+	get_next_line(1000);
 	/*
 	get_next_line(fd);
 	get_next_line(fd);

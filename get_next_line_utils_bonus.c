@@ -21,22 +21,17 @@ char	*ft_strjoin(char *tic, char *bff, size_t i, size_t j)
 		tic = ft_calloc(1, sizeof(char));
 		if (!tic)
 			return (NULL);
-		nstr = ft_calloc(1 + ft_strlen(bff), sizeof(char));
 	}
-	else
-		nstr = ft_calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
+	nstr = ft_calloc(ft_strlen(tic) + ft_strlen(bff) + 1, sizeof(char));
 	if (!nstr)
+	{
+		free(tic);
 		return (NULL);
-	while (tic[i])
-	{
+	}
+	while (tic[++i])
 		nstr[i] = tic[i];
-		i++;
-	}
-	while (bff[j])
-	{
+	while (bff[++j])
 		nstr[i + j] = bff[j];
-		j++;
-	}
 	free(tic);
 	return (nstr);
 }

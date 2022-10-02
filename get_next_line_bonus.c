@@ -62,7 +62,7 @@ static _Bool	ft_concatenation(int fd, int *i, char *buffer, char **concat)
 		buffer[*i] = '\0';
 		first_join = 0;
 		second_join = 0;
-		*concat = ft_strjoin(*concat, buffer, first_join, second_join);
+		*concat = ft_strjoin(*concat, buffer, first_join - 1, second_join - 1);
 		if (!*concat)
 		{	
 			free(buffer);
@@ -96,6 +96,8 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	i = 1;
+	if (fd < 0)
+		return (0);
 	buffer = (char *) ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
 	{
